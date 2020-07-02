@@ -1,13 +1,13 @@
-package br.com.cvccorp;
+package br.com.fayoub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SuperappApplication {
+public class SchedulerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SuperappApplication.class, args);
+		SpringApplication.run(SchedulerApplication.class, args);
 	}
 
 }
