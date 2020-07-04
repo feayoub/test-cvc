@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Transfers Scheduled</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+</head>
+<body class="container">
+
+	<h1 class="text-center">Scheduled Transfers</h1>
+	
+	<table class="table table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>SOURCE ACCT</th>
+				<th>DESTINATION ACCT</th>
+				<th>VALUE</th>
+				<th>TAX</th>
+				<th>TYPE</th>
+				<th>TRANSFER DATE</th>
+				<th>SCHEDULING DATE</th>
+				<th>EDIT</th>
+				<th>DELETE</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="transfer : ${transfers}">
+				<td th:text="${transfer.sourceAccount}"/>
+				<td th:text="${transfer.destinationAccount}"/>
+				<td th:text="${transfer.value}"/>
+				<td th:text="${transfer.tax}"/>
+				<td th:text="${transfer.type}"/>
+				<td th:text="${#temporals.format(transfer.schedulingDate, 'dd/MM/yyyy')}"/>
+				<td th:text="${#temporals.format(transfer.transferDate, 'dd/MM/yyyy')}"/>
+				<td><a th:href="@{/transfers/edit/{id}(id=${transfer.id})}">Edit</a></td>
+                <td><a th:href="@{/transfers/delete/{id}(id=${transfer.id})}">Delete</a></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col text-center">
+				<a href=transfers/schedule>
+					<button class="btn btn-default" type = "button">
+						Schedule your transfer
+					</button>
+				</a>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Transfers Scheduled</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body class="container">
+
+	<h1 class="text-center">Schedule your transfer</h1>
+	
+	<form class="form" action="#" th:action="@{/transfers/schedule}" th:object="${transferDTO}" method="post">
+        
+        <div class="form-group">
+            <label for="sourceAccount">Source Account</label>
+            <input type="text" th:field="*{sourceAccount}" id="sourceAccount" class="form-control" placeholder="XXXXXX" autofocus/>
+            <span style="color:red" th:if="${#fields.hasErrors('sourceAccount')}" th:errors="*{sourceAccount}"></span>     
+        </div>    
+        
+        <div class="form-group">
+            <label for="destinationAccount">Destination Account</label>
+            <input type="text" th:field="*{destinationAccount}" id="destinationAccount" class="form-control" placeholder="XXXXXX"/>
+            <span style="color:red" th:if="${#fields.hasErrors('destinationAccount')}" th:errors="*{destinationAccount}"></span>
+        </div>
+        
+        <div class="form-group">
+            <label for="value">Value</label>
+            <input type="number" th:field="*{value}" id="value" class="form-control" step="0.01" value="0.0"/>
+            <span style="color:red" th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+        </div>
+                
+        <div class="form-group">
+            <label for="transferDate">Transfer Date</label>
+            <input type="date" th:field="*{transferDate}" id="data" class="form-control" required />
+            <span style="color:red" th:if="${#fields.hasErrors('transferDate')}" th:errors="*{transferDate}"></span>      
+        </div>
+    
+        <button class="btn btn-default" type="submit">Schedule</button>
+    </form>
+    
+    <div class="btn-group" style="margin-top:15px ">
+	    <a href=/transfers>
+			<button class="btn btn-default" type = "button">
+				Scheduled transfers
+			</button>
+		</a>
+	</div>
+	
+</body>
+</html>

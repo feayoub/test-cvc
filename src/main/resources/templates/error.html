@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Error</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+</head>
+<body>
+	<h1 class="text-center">Error</h1>
+	<table class="table table-hover table-bordered">
+	    <tr>
+	        <td>Date</td>
+	        <td th:text="${timestamp}"/>
+	    </tr>
+	    <tr>
+	        <td>Path</td>
+	        <td th:text="${path}"/>
+	    </tr>
+	    <tr>
+	        <td>Error</td>
+	        <td th:text="${error}"/>
+	    </tr>
+	    <tr>
+	        <td>Status</td>
+	        <td th:text="${status}"/>
+	    </tr>
+	    <tr>
+	        <td>Message</td>
+	        <td th:text="${message}"/>
+	    </tr>
+	    <tr>
+	        <td>Exception</td>
+	        <td th:text="${exception}"/>
+	    </tr>
+	</table>
+</body>
+</html>
