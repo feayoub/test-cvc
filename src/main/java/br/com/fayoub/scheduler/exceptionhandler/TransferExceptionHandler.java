@@ -3,6 +3,8 @@ package br.com.fayoub.scheduler.exceptionhandler;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,21 +20,18 @@ public class TransferExceptionHandler {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @ExceptionHandler(TaxNotFoundException.class)
-    public ModelAndView handleTaxNotFound(TaxNotFoundException ex, WebRequest web) {
-        ModelAndView mav = new ModelAndView("error");
-        mav.addObject("path", "/transfers/schedule");
-        return generateBadRequest(mav, ex);
+    public ModelAndView handleTaxNotFound(TaxNotFoundException ex, HttpServletRequest req) {
+        return generateBadRequest(ex, req);
     }
     
     @ExceptionHandler(TransferNotFoundException.class)
-    public ModelAndView handleTaxNotFound(TransferNotFoundException ex, WebRequest web) {
-        ModelAndView mav = new ModelAndView("error");
-        mav.addObject("path", "/transfers/edit/{id}");
-        return generateBadRequest(mav, ex);
-        
+    public ModelAndView handleTransferNotFound(TransferNotFoundException ex, HttpServletRequest req) {
+        return generateBadRequest(ex, req);
     }
     
-    private ModelAndView generateBadRequest(ModelAndView mav, RuntimeException ex) {
+    private ModelAndView generateBadRequest(RuntimeException ex, HttpServletRequest req) {
+        ModelAndView mav = new ModelAndView("error");
+        mav.addObject("path", req.getRequestURI());
         mav.addObject("timestamp", formatter.format(OffsetDateTime.now()));
         mav.addObject("error", "Bad Request");
         mav.addObject("status", HttpStatus.BAD_REQUEST.value());

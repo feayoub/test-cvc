@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.fayoub.scheduling</groupId>
-	<artifactId>scheduling-api</artifactId>
+	<artifactId>scheduler</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>scheduler</name>
 	<description>CVC Corp test</description>
