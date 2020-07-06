@@ -62,7 +62,7 @@ public class TransferController {
         return "transfer-update-form";
     }
     
-    @PostMapping("/update/{id}")
+    @PostMapping("/edit/{id}")
     public String updateTransfer(@PathVariable("id") long id, @Valid TransferDTO transferDTO, 
       BindingResult result, Model model) {
         transferDTO.setId(id);

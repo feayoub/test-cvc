@@ -10,10 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.fayoub.scheduler.domain.strategy.tax.Tax;
-import br.com.fayoub.scheduler.domain.strategy.tax.TaxA;
-import br.com.fayoub.scheduler.domain.strategy.tax.TaxB;
-import br.com.fayoub.scheduler.domain.strategy.tax.TaxC;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "transfer")
@@ -78,6 +76,16 @@ public class Transfer {
     }
     public void setSchedulingDate(LocalDate schedulingDate) {
         this.schedulingDate = schedulingDate;
+    }
+    
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
     
     public enum TransferType {

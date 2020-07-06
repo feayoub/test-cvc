@@ -8,6 +8,9 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import br.com.fayoub.scheduler.domain.model.Transfer.TransferType;
 
 public class TransferDTO {
@@ -83,4 +86,13 @@ public class TransferDTO {
         this.schedulingDate = schedulingDate;
     }
     
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
 }

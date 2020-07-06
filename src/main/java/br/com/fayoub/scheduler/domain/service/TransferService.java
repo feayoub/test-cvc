@@ -1,6 +1,6 @@
 package br.com.fayoub.scheduler.domain.service;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ public class TransferService{
     }
 
     public Transfer create(Transfer transfer) {
-        transfer.setSchedulingDate(OffsetDateTime.now().toLocalDate());
+        transfer.setSchedulingDate(LocalDate.now());
         return saveOrUpdate(transfer);
     }
     
