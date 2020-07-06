@@ -1,11 +1,22 @@
-package br.com.fayoub.scheduler.domain.model.tax;
+package br.com.fayoub.scheduler.domain.strategy.tax;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 
-public class TaxC implements Tax {
+import br.com.fayoub.scheduler.domain.model.Transfer;
+import br.com.fayoub.scheduler.domain.model.Transfer.TransferType;
 
+public class TaxC extends AbstractTax {
+    
+    public TaxC() {
+        this.transferType = TransferType.C;
+    }
+    
     @Override
-    public BigDecimal calculate(BigDecimal value, long daysBetween) {
+    public BigDecimal calculate(Transfer transfer) {
+        BigDecimal value = transfer.getValue();
+        long daysBetween = Duration.between(transfer.getSchedulingDate().atStartOfDay(), transfer.getTransferDate().atStartOfDay()).toDays();
+        
         if (daysBetween > 10 && daysBetween <= 20)
             return value.multiply(BigDecimal.valueOf(0.08));
         if (daysBetween > 20 && daysBetween <= 30)

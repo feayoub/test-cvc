@@ -5,11 +5,14 @@ import java.time.Duration;
 
 import br.com.fayoub.scheduler.domain.exception.TaxNotFoundException;
 import br.com.fayoub.scheduler.domain.model.Transfer;
-import br.com.fayoub.scheduler.domain.model.Transfer.TransferType;
+import br.com.fayoub.scheduler.domain.strategy.tax.Tax;
+import br.com.fayoub.scheduler.domain.strategy.tax.TaxA;
+import br.com.fayoub.scheduler.domain.strategy.tax.TaxB;
+import br.com.fayoub.scheduler.domain.strategy.tax.TaxC;
 
-public class TransferTypeFactory {
+public class TaxFactory {
 
-    public static TransferType resolveType(Transfer transfer) {
+    public Tax create(Transfer transfer) {
         long daysThreshold = 10;
         long maxDaysThreshold = 40;
         BigDecimal valueThreshold = BigDecimal.valueOf(100000.0);
@@ -18,12 +21,12 @@ public class TransferTypeFactory {
         BigDecimal value = transfer.getValue();
         
         if (daysBetween == 0)
-            return TransferType.A;
+            return new TaxA();
         if (daysBetween <= daysThreshold)
-            return TransferType.B;
+            return new TaxB();
         if (daysBetween <= maxDaysThreshold || 
                 (daysBetween > maxDaysThreshold && value.compareTo(valueThreshold) == 1))
-            return TransferType.C;
+            return new TaxC();
         
         throw new TaxNotFoundException("Tax not found for input values");
     }

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import br.com.fayoub.scheduler.domain.model.Transfer.TransferType;
@@ -14,15 +14,15 @@ public class TransferDTO {
 
     private long id;
     
-    @NotBlank(message = "value has to be present")
-    @Size(min = 1, max = 6, message = "The source account '${validatedValue}' must be between {min} and {max} characters long")
+    @Size(min = 6, max = 6, message = "The source account '${validatedValue}' must be {max} characters long")
+    @Pattern(regexp = "\\d+", message = "The source account must be numeric")
     private String sourceAccount;
     
-    @NotBlank(message = "value has to be present")
-    @Size(min = 1, max = 6, message = "The destination account '${validatedValue}' must be between {min} and {max} characters long")
+    @Size(min = 6, max = 6, message = "The destination account '${validatedValue}' must be {max} characters long")
+    @Pattern(regexp = "\\d+", message = "The destination account must be numeric")
     private String destinationAccount;
     
-    @DecimalMin(value = "0.01", message = "value '${validatedValue}' must be at least {value}")
+    @DecimalMin(value = "0.01", message = "Value '${validatedValue}' must be at least {value}")
     private BigDecimal value;
     
     private BigDecimal tax;

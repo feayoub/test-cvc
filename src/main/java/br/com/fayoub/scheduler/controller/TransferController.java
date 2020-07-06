@@ -20,10 +20,9 @@ import br.com.fayoub.scheduler.domain.exception.TransferNotFoundException;
 import br.com.fayoub.scheduler.domain.model.Transfer;
 import br.com.fayoub.scheduler.domain.service.TransferService;
 import br.com.fayoub.scheduler.dto.TransferDTO;
-import br.com.fayoub.scheduler.route.TransferRoute;
 
 @Controller
-@RequestMapping(TransferRoute.ROOT)
+@RequestMapping("/transfers")
 public class TransferController {
     
     @Autowired
@@ -43,7 +42,7 @@ public class TransferController {
         return new ModelAndView("transfer-form");
     }
     
-    @PostMapping(TransferRoute.SCHEDULE)
+    @PostMapping("/schedule")
     public String create(@Valid TransferDTO transferDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "transfer-form";
@@ -89,7 +88,7 @@ public class TransferController {
     
     private List<TransferDTO> toCollectionModel(List<Transfer> transfers){
         return transfers.stream()
-                .map(transfer -> toModel(transfer))
+                .map(this::toModel)
                 .collect(Collectors.toList());
     }
     

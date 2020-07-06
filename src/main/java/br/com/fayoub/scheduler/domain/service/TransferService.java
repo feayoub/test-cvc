@@ -7,10 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.fayoub.scheduler.domain.factory.TransferTypeFactory;
+import br.com.fayoub.scheduler.domain.factory.TaxFactory;
 import br.com.fayoub.scheduler.domain.model.Transfer;
-import br.com.fayoub.scheduler.domain.model.Transfer.TransferType;
 import br.com.fayoub.scheduler.domain.repository.TransferRepository;
+import br.com.fayoub.scheduler.domain.strategy.tax.Tax;
 
 @Service
 public class TransferService{
@@ -41,10 +41,10 @@ public class TransferService{
     }
     
     private void resolveTaxAndType(Transfer transfer) {
-        TransferType type = TransferTypeFactory.resolveType(transfer);
+        Tax tax = new TaxFactory().create(transfer);
         
-        transfer.setTax(type.calculate(transfer));
-        transfer.setType(type);
+        transfer.setTax(tax.calculate(transfer));
+        transfer.setType(tax.getTransferType());
     }
 
 }
