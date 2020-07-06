@@ -6,13 +6,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -25,27 +29,41 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.View;
 
 import br.com.fayoub.scheduler.domain.model.Transfer;
+import br.com.fayoub.scheduler.domain.repository.TransferRepository;
 import br.com.fayoub.scheduler.domain.service.TransferService;
+import br.com.fayoub.scheduler.dto.TransferDTO;
 
 @WebAppConfiguration
-@ContextConfiguration
+@ContextConfiguration(classes = {TransferRepository.class})
 public class TransferControllerTest {
 
     @InjectMocks
     TransferController controller = new TransferController();
-    
+
     @Mock
     TransferService service = new TransferService();
-    
+
     @Mock
     View mockView;
+
+    @Mock
+    ModelMapper modelMapper = new ModelMapper();
     
+    @Resource
+    TransferRepository repository;
+
     MockMvc mockMvc;
-    
-    Transfer transfer = new Transfer();
+
+    Transfer transfer;
+
+    TransferDTO transferDTO;
+
+    ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 
     @BeforeEach
-    public void setup () {
+    public void setup() {
+        transfer = new Transfer();
+        transferDTO = new TransferDTO();
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).setSingleView(mockView).build();
     }
@@ -53,32 +71,45 @@ public class TransferControllerTest {
     @Test
     public void testListTransfer() throws Exception {
         List<Transfer> expectedTransfers = List.of(transfer);
-        
+
         when(service.getAll()).thenReturn(expectedTransfers);
+        when(modelMapper.map(transfer, TransferDTO.class)).thenReturn(transferDTO);
+
+        mockMvc.perform(get("/transfers")).andExpect(ok).andExpect(model().attribute("transfers", List.of(transferDTO)))
+                .andExpect(view().name("transfer-list"));
+    }
+
+    @Test
+    public void testScheduleTransferGet() throws Exception {
+        mockMvc.perform(get("/transfers/schedule")).andExpect(ok)
+                .andExpect(model().attribute("transferDTO", transferDTO)).andExpect(view().name("transfer-form"));
+
+    }
+
+    @Test
+    public void testScheduleTransferPost() throws Exception {
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/transfers/schedule")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content("sourceAccount=123456&destinationAccount=123456&value=1231&transferDate=2020-07-06");
         
-        mockMvc.perform(get("/transfers")).andExpect(status().isOk())
-            .andExpect(model().attribute("transfers", expectedTransfers)).andExpect(view().name("transfer-list"));
+        transferDTO.setSourceAccount("123456");
+        transferDTO.setDestinationAccount("123456");
+        transferDTO.setValue(BigDecimal.valueOf(1231));
+
+        mockMvc.perform(builder).andExpect(ok)
+                .andExpect(model().attribute("transferDTO", transferDTO)).andExpect(view().name("transfer-form"));
+
+        builder = MockMvcRequestBuilders.get("/transfers/schedule");
+        mockMvc.perform(builder).andExpect(ok);
     }
     
     @Test
-    public void testTransferControllerPost() throws Exception {
-        ResultMatcher ok = MockMvcResultMatchers.status()
-                                                .isOk();
-
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/transfers/schedule")
-                                                                       .contentType(MediaType.APPLICATION_JSON)
-                                                                       .content("{\r\n" + 
-                                                                               "    \"sourceAccount\" : \"123456\",\r\n" + 
-                                                                               "    \"destinationAccount\" : \"123456\",\r\n" + 
-                                                                               "    \"value\" : 100.0,\r\n" + 
-                                                                               "    \"transferDate\" : \"2020-07-07T00:00\"\r\n" + 
-                                                                               "}");
-        this.mockMvc.perform(builder)
-                    .andExpect(ok);
-
-         builder = MockMvcRequestBuilders.get(
-                            "/transfers/schedule");
-        this.mockMvc.perform(builder)
-                    .andExpect(ok);
+    public void testEditTransferGetError() throws Exception {
+        mockMvc.perform(get("/transfers/edit").param("id", "1")).andExpect(status().is4xxClientError());
+    }
+    
+    @Test
+    public void testDeleteTransferGetError() throws Exception {
+        mockMvc.perform(get("/transfers/delete").param("id", "1")).andExpect(status().is4xxClientError());
     }
 }
