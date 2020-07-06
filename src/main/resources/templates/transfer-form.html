@@ -31,7 +31,7 @@
                 
         <div class="form-group">
             <label for="transferDate">Transfer Date</label>
-            <input type="date" th:field="*{transferDate}" id="data" class="form-control" required />
+            <input type="date" th:field="*{transferDate}" id="date" class="form-control" />
             <span style="color:red" th:if="${#fields.hasErrors('transferDate')}" th:errors="*{transferDate}"></span>      
         </div>
     
@@ -45,6 +45,19 @@
 			</button>
 		</a>
 	</div>
+	
+	<script>
+		Date.prototype.toDateInputValue = (function() {
+		    var local = new Date(this);
+		    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+		    return local.toJSON().slice(0,10);
+		});
+		
+		var dateValue = document.getElementById('date').value;
+		if (!dateValue)
+			dateValue = new Date().toDateInputValue();
+		
+	</script>
 	
 </body>
 </html>
