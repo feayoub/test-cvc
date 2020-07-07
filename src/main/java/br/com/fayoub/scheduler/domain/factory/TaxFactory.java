@@ -10,8 +10,16 @@ import br.com.fayoub.scheduler.domain.strategy.tax.TaxA;
 import br.com.fayoub.scheduler.domain.strategy.tax.TaxB;
 import br.com.fayoub.scheduler.domain.strategy.tax.TaxC;
 
+/***
+ * Factory responsible for instantiate the right Tax class given a Transfer
+ */
 public class TaxFactory {
 
+    /***
+     * 
+     * @param transfer
+     * @return possible taxes given the rules
+     */
     public Tax create(Transfer transfer) {
         long daysThreshold = 10;
         long maxDaysThreshold = 40;

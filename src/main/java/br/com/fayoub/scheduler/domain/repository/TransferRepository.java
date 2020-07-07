@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import br.com.fayoub.scheduler.domain.model.Transfer;
 
+/**
+ * Repository of the Application
+ */
 @Repository
 public interface TransferRepository extends JpaRepository<Transfer, Long>{
 

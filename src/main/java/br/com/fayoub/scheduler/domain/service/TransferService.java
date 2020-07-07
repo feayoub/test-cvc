@@ -12,6 +12,9 @@ import br.com.fayoub.scheduler.domain.model.Transfer;
 import br.com.fayoub.scheduler.domain.repository.TransferRepository;
 import br.com.fayoub.scheduler.domain.strategy.tax.Tax;
 
+/**
+ * Service layer for the application
+ */
 @Service
 public class TransferService{
     
@@ -40,6 +43,10 @@ public class TransferService{
         repository.deleteById(transfer.getId());
     }
     
+    /***
+     * Method responsible to set the right type and tax for the transfer
+     * @param transfer
+     */
     private void resolveTaxAndType(Transfer transfer) {
         Tax tax = new TaxFactory().create(transfer);
         

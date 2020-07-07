@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import br.com.fayoub.scheduler.domain.model.Transfer;
 import br.com.fayoub.scheduler.domain.model.Transfer.TransferType;
 
+/**
+ * Implementation A of {@link Tax} interface
+ */
 public class TaxA extends AbstractTax {
     
     public TaxA() {

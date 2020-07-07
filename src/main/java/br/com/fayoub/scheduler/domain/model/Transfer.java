@@ -13,6 +13,9 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+/**
+ * Entity saved in the database
+ */
 @Entity
 @Table(name = "transfer")
 public class Transfer {

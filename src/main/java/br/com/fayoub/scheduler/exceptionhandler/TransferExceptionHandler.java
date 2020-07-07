@@ -14,6 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.fayoub.scheduler.domain.exception.TaxNotFoundException;
 import br.com.fayoub.scheduler.domain.exception.TransferNotFoundException;
 
+/**
+ * Exception handler of the application.
+ * <p>
+ * Captures the exception and shows it to the user through the error view
+ */
 @ControllerAdvice
 public class TransferExceptionHandler {
     

@@ -21,6 +21,9 @@ import br.com.fayoub.scheduler.domain.model.Transfer;
 import br.com.fayoub.scheduler.domain.service.TransferService;
 import br.com.fayoub.scheduler.dto.TransferDTO;
 
+/**
+ * The Controller layer of the application
+ */
 @Controller
 @RequestMapping("/transfers")
 public class TransferController {

@@ -6,6 +6,9 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.ConverterRegistry;
 import org.springframework.core.convert.support.DefaultConversionService;
 
+/**
+ * Main class of the application
+ */
 @SpringBootApplication
 public class SchedulerApplication {
 

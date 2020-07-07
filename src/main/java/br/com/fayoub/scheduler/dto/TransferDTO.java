@@ -13,6 +13,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import br.com.fayoub.scheduler.domain.model.Transfer.TransferType;
 
+/**
+ * Data Transfer Object of the application
+ */
 public class TransferDTO {
 
     private long id;

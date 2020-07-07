@@ -6,6 +6,9 @@ import java.time.Duration;
 import br.com.fayoub.scheduler.domain.model.Transfer;
 import br.com.fayoub.scheduler.domain.model.Transfer.TransferType;
 
+/**
+ * Implementation B of {@link Tax} interface
+ */
 public class TaxB extends AbstractTax {
     
     public TaxB() {
