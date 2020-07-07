@@ -6,15 +6,19 @@ I chose to build this application using the MVC architecture, because it is a si
 
 I used the strategy pattern to calculate the taxes and the factory to instantiate the right tax class to make it easy to maintain and scale.
 
-The language used was Java 14.
+The programming language used was Java 14.
 
 ## Deployment
 
 To deploy this application you need to follow these steps:
-- install the JDK from this link https://adoptopenjdk.net/releases.html?variant=openjdk14&jvmVariant=hotspot.
-- open the command prompt and go to the root directory of the project
-- run the commmand 'mvn clean package'
-- go to the target directory now and run the command 'java -jar scheduler-0.0.1-SNAPSHOT.jar'
+- Install the JDK from this link https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html
+- Open the environment variables of the system and edit the "Path" variable
+- Choose the directory you installed your JDK and add the bin folder
+- Make sure that this Path is above any other JDK paths you could have in your system. (to make sure, you can put this path at the top of the list)
+- Open the command prompt and go to the root directory of the project
+- Run the commmand 'mvn clean package'
+- Go to the target directory now and run the command 'java -jar scheduler-0.0.1-SNAPSHOT.jar'
+- After finishing the lines in the command prompt go to localhost:8080 and use the application 
 
 ## Built With
 
